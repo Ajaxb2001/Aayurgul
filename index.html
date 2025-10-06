@@ -4,9 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aayurgul by Navaved Agro - Authentic Ayurvedic products including jaggery powder, mouth freshener, and traditional masalas. Ancient wisdom for modern wellness.">
+    <meta name="keywords" content="Ayurveda, Ayurvedic products, Jaggery powder, Mouth freshener, Kolhapuri masala, Natural products">
     <title>Aayurgul by Navaved Agro - Authentic Ayurvedic Products</title>
     <link rel="icon" type="image/png" href="navaved1.jpg">
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="optimized-styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
@@ -18,12 +20,17 @@
                 <div class="logo">
                     <img src="navaved1.jpg" alt="Navaved Aayurgul Logo" class="company-logo">
                 </div>
-                <ul class="nav-menu">
+                <ul class="nav-menu" id="navMenu">
                     <li><a href="#home" class="nav-link">Home</a></li>
                     <li><a href="#products" class="nav-link">Products</a></li>
                     <li><a href="#about" class="nav-link">About</a></li>
                     <li><a href="#contact" class="nav-link">Contact</a></li>
                 </ul>
+                <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
         </nav>
     </header>
@@ -311,6 +318,25 @@
                 }
             };
 
+            // Mobile menu toggle
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('navMenu');
+
+            hamburger.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                hamburger.classList.toggle('active');
+                document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+            });
+
+            // Close menu when clicking on a link
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function() {
+                    navMenu.classList.remove('active');
+                    hamburger.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            });
+
             // DOM elements
             const productModal = document.getElementById("productModal");
             const infoModal = document.getElementById("infoModal");
@@ -335,8 +361,13 @@
             // Header scroll effect
             window.addEventListener('scroll', function() {
                 const header = document.querySelector('.header');
-                header.style.background = window.scrollY > 100 ? 'rgba(10, 10, 20, 0.95)' : 'transparent';
-                header.style.backdropFilter = window.scrollY > 100 ? 'blur(10px)' : 'none';
+                if (window.scrollY > 100) {
+                    header.style.background = 'rgba(255, 255, 255, 0.98)';
+                    header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+                } else {
+                    header.style.background = 'rgba(255, 255, 255, 0.95)';
+                    header.style.boxShadow = 'none';
+                }
             });
 
             // Intersection Observer for animations
@@ -347,7 +378,7 @@
                         entry.target.style.opacity = '1';
                     }
                 });
-            }, { threshold: 0.5, rootMargin: '0px 0px -100px 0px' });
+            }, { threshold: 0.1 });
 
             document.querySelectorAll('.product-card, .stat-item').forEach(el => {
                 el.style.transform = 'translateY(20px)';
