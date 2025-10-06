@@ -312,7 +312,7 @@
         });
 
         // Add scroll effect to header
-        window.addEventListener('scroll', function() {
+        window.addEventListener('scroll', function () {
             const header = document.querySelector('.header');
             if (window.scrollY > 100) {
                 header.style.background = 'rgba(10, 10, 20, 0.95)';
@@ -344,6 +344,99 @@
             el.style.transition = 'all 0.6s ease';
             observer.observe(el);
         });
+        // Modal functionality
+        const modal = document.getElementById("productModal");
+        const closeBtn = document.querySelector(".close");
+        const modalTitle = document.getElementById("modal-title");
+        const modalDescription = document.getElementById("modal-description");
+        const modalPrice = document.getElementById("modal-price");
+
+        // Example product data
+        // Example product data with images
+        const productData = {
+            "Ayurvedic Jaggery Powder": {
+                description: "Premium jaggery powder, rich in minerals & antioxidants.",
+                price: "₹180 / 500g",
+                image: "WhatsApp Image 2025-09-16 at 21.59.20_b6662f00.jpg"
+            },
+            "Annapurna Mouth Freshener": {
+                description: "Natural herbal blend for fresh breath & digestion.",
+                price: "₹120 / 100g",
+                image: "WhatsApp Image 2025-09-16 at 21.59.20_a7e94f44.jpg"
+            },
+            "Modakam Saran Masala": {
+                description: "Traditional masala blend for energy & wellness.",
+                price: "₹250 / 200g",
+                image: "modak saran masala.jpg"
+            },
+            "Kolhapuri Masala Mirchi": {
+                description: "Authentic Kolhapuri chili spice mix.",
+                price: "₹150 / 100g",
+                image: "masala.jpg"
+            }
+        };
+
+        // Modal elements
+        const modalImage = document.getElementById("modal-image");
+
+        // Attach click listeners to product cards
+        document.querySelectorAll(".product-card").forEach(card => {
+            card.addEventListener("click", () => {
+                const title = card.querySelector("h3").innerText;
+                modalTitle.innerText = title;
+                modalDescription.innerText = productData[title].description;
+                modalPrice.innerText = productData[title].price;
+                modalImage.src = productData[title].image;
+                modal.style.display = "flex";
+            });
+        });
+
+
+        // Close modal
+        closeBtn.addEventListener("click", () => modal.style.display = "none");
+        window.addEventListener("click", e => {
+            if (e.target === modal) modal.style.display = "none";
+        });
+
+        // Info Modal
+        const infoModal = document.getElementById("infoModal");
+        const infoTitle = document.getElementById("info-title");
+        const infoText = document.getElementById("info-text");
+        const closeInfo = infoModal.querySelector(".close");
+
+        // Data for About Ayurveda & Health Benefits
+        const infoData = {
+            "About Ayurveda": {
+                title: "About Ayurveda",
+                text: "Ayurveda, the ancient system of natural healing, originated in India more than 5,000 years ago. It emphasizes the balance between mind, body, and spirit, using natural herbs, dietary principles, and lifestyle practices. Ayurvedic wisdom teaches that health is not just the absence of disease but a state of complete harmony and vitality."
+            },
+            "Health Benefits": {
+                title: "Health Benefits of Our Products",
+                text: "Our Ayurvedic products provide numerous benefits such as improving digestion, boosting immunity, balancing energy levels, detoxifying the body, and promoting mental clarity. Regular consumption supports holistic wellness and prevents lifestyle-related disorders by restoring natural balance in the body."
+            }
+        };
+
+        // Attach click listeners to buttons
+        document.querySelector(".btn.btn-primary").addEventListener("click", () => {
+            infoTitle.innerText = infoData["About Ayurveda"].title;
+            infoText.innerText = infoData["About Ayurveda"].text;
+            infoModal.style.display = "flex";
+        });
+
+        document.querySelector(".btn.btn-outline").addEventListener("click", () => {
+            infoTitle.innerText = infoData["Health Benefits"].title;
+            infoText.innerText = infoData["Health Benefits"].text;
+            infoModal.style.display = "flex";
+        });
+
+        // Close modal
+        closeInfo.addEventListener("click", () => infoModal.style.display = "none");
+        window.addEventListener("click", e => {
+            if (e.target === infoModal) infoModal.style.display = "none";
+        });
+
+            
+
     </script>
 </body>
 
