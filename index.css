@@ -96,8 +96,9 @@ body {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 0;
+    padding: 0.5rem;
     z-index: 1001;
+    position: relative;
 }
 
 .hamburger span {
@@ -105,12 +106,14 @@ body {
     height: 3px;
     background-color: var(--text-primary);
     margin: 3px 0;
-    transition: var(--transition);
+    transition: all 0.3s ease;
     border-radius: 3px;
+    display: block;
 }
 
 .hamburger.active span:nth-child(1) {
     transform: rotate(45deg) translate(7px, 7px);
+    background-color: var(--primary-color);
 }
 
 .hamburger.active span:nth-child(2) {
@@ -119,6 +122,26 @@ body {
 
 .hamburger.active span:nth-child(3) {
     transform: rotate(-45deg) translate(7px, -7px);
+    background-color: var(--primary-color);
+}
+
+/* Mobile Menu Overlay */
+.menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.menu-overlay.active {
+    display: block;
+    opacity: 1;
 }
 
 .nav-link {
@@ -1028,28 +1051,36 @@ body {
 @media (max-width: 768px) {
     .nav-container {
         padding: 0 1rem;
+        position: relative;
     }
     
     /* Show hamburger menu */
     .hamburger {
         display: flex;
+        order: 2;
+    }
+    
+    .logo {
+        order: 1;
     }
     
     /* Mobile menu styles */
     .nav-menu {
         position: fixed;
         left: -100%;
-        top: 70px;
+        top: 0;
         flex-direction: column;
         background-color: var(--background-light);
-        width: 100%;
-        text-align: center;
-        transition: 0.3s;
-        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
-        padding: 2rem 0;
+        width: 80%;
+        max-width: 300px;
+        height: 100vh;
+        text-align: left;
+        transition: left 0.3s ease-in-out;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        padding: 5rem 0 2rem 0;
         gap: 0;
-        border-top: 1px solid var(--border-color);
-        z-index: 1000;
+        z-index: 999;
+        overflow-y: auto;
     }
     
     .nav-menu.active {
@@ -1057,13 +1088,19 @@ body {
     }
     
     .nav-menu li {
-        padding: 1rem 0;
+        padding: 0;
+        border-bottom: 1px solid var(--border-color);
     }
     
     .nav-link {
         font-size: 1.125rem;
         display: block;
-        padding: 1rem;
+        padding: 1.25rem 2rem;
+        color: var(--text-primary);
+    }
+    
+    .nav-link:hover {
+        background-color: var(--background-secondary);
     }
     
     .hero-cta {
