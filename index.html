@@ -57,7 +57,47 @@
     <!-- Products Section -->
     <section id="products" class="products">
         <div class="container">
-            <h2 class="section-title">Our Premium Ayurvedic Range</h2>
+            <h2 class="section-title">Our Products</h2>
+            
+            <!-- Image Carousel -->
+            <div class="carousel-container">
+                <div class="carousel-wrapper">
+                    <button class="carousel-btn prev" aria-label="Previous">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="carousel-track-container">
+                        <div class="carousel-track">
+                            <div class="carousel-slide">
+                                <img src="WhatsApp Image 2025-09-16 at 21.59.20_b6662f00.jpg" alt="Ayurvedic Jaggery Powder">
+                                <div class="carousel-caption">Ayurvedic Jaggery Powder</div>
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="WhatsApp Image 2025-09-16 at 21.59.20_a7e94f44.jpg" alt="Annapurna Mouth Freshener">
+                                <div class="carousel-caption">Annapurna Mouth Freshener</div>
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="modak saran masala.jpg" alt="Modakam Saran Masala">
+                                <div class="carousel-caption">Modakam Saran Masala</div>
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="masala.jpg" alt="Kolhapuri Masala Mirchi">
+                                <div class="carousel-caption">Kolhapuri Masala Mirchi</div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-btn next" aria-label="Next">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="carousel-indicators">
+                    <button class="indicator active" data-slide="0"></button>
+                    <button class="indicator" data-slide="1"></button>
+                    <button class="indicator" data-slide="2"></button>
+                    <button class="indicator" data-slide="3"></button>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Our Premium Ayurvedic Range</h3>
             <div class="products-grid">
                 <article class="product-card" data-product="Ayurvedic Jaggery Powder">
                     <div class="product-icon">
@@ -314,7 +354,7 @@
                 },
                 "Health Benefits": {
                     title: "Health Benefits of Our Products",
-                    text: "Our Ayurvedic products provide numerous benefits such as improving digestion, boosting immunity, balancing energy levels, detoxifying the body, and promoting mental clarity. They help regulate blood sugar levels, enhance skin health, support healthy metabolism, and promote better sleep. Regular consumption supports holistic wellness, strengthens the body’s natural defense mechanisms, and prevents lifestyle-related disorders by restoring natural balance and harmony within the body."
+                    text: "Our Ayurvedic products provide numerous benefits such as improving digestion, boosting immunity, balancing energy levels, detoxifying the body, and promoting mental clarity. Regular consumption supports holistic wellness and prevents lifestyle-related disorders by restoring natural balance in the body."
                 }
             };
 
@@ -430,6 +470,69 @@
                     e.target.setAttribute('aria-hidden', 'true');
                 }
             });
+
+            // Carousel functionality
+            const track = document.querySelector('.carousel-track');
+            const slides = Array.from(track.children);
+            const prevBtn = document.querySelector('.carousel-btn.prev');
+            const nextBtn = document.querySelector('.carousel-btn.next');
+            const indicators = Array.from(document.querySelectorAll('.indicator'));
+            let currentSlide = 0;
+            let autoSlideInterval;
+
+            const moveToSlide = (targetIndex) => {
+                track.style.transform = `translateX(-${targetIndex * 100}%)`;
+                indicators.forEach((ind, i) => {
+                    ind.classList.toggle('active', i === targetIndex);
+                });
+                currentSlide = targetIndex;
+            };
+
+            const nextSlide = () => {
+                const nextIndex = (currentSlide + 1) % slides.length;
+                moveToSlide(nextIndex);
+            };
+
+            const prevSlide = () => {
+                const prevIndex = (currentSlide - 1 + slides.length) % slides.length;
+                moveToSlide(prevIndex);
+            };
+
+            const startAutoSlide = () => {
+                autoSlideInterval = setInterval(nextSlide, 4000);
+            };
+
+            const stopAutoSlide = () => {
+                clearInterval(autoSlideInterval);
+            };
+
+            nextBtn.addEventListener('click', () => {
+                nextSlide();
+                stopAutoSlide();
+                startAutoSlide();
+            });
+
+            prevBtn.addEventListener('click', () => {
+                prevSlide();
+                stopAutoSlide();
+                startAutoSlide();
+            });
+
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => {
+                    moveToSlide(index);
+                    stopAutoSlide();
+                    startAutoSlide();
+                });
+            });
+
+            // Start auto-sliding
+            startAutoSlide();
+
+            // Pause on hover
+            const carouselContainer = document.querySelector('.carousel-container');
+            carouselContainer.addEventListener('mouseenter', stopAutoSlide);
+            carouselContainer.addEventListener('mouseleave', startAutoSlide);
         })();
     </script>
 </body>
