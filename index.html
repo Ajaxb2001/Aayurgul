@@ -67,33 +67,68 @@
                     </button>
                     <div class="carousel-track-container">
                         <div class="carousel-track">
-                            <div class="carousel-slide">
-                                <img src="WhatsApp Image 2025-09-16 at 21.59.20_b6662f00.jpg" alt="Ayurvedic Jaggery Powder">
-                                <div class="carousel-caption">Ayurvedic Jaggery Powder</div>
+                            <div class="carousel-slide active">
+                                <div class="carousel-image-wrapper">
+                                    <img src="WhatsApp Image 2025-09-16 at 21.59.20_b6662f00.jpg" alt="Ayurvedic Jaggery Powder">
+                                </div>
+                                <div class="carousel-overlay"></div>
+                                <div class="carousel-caption">
+                                    <h3>Ayurvedic Jaggery Powder</h3>
+                                    <p>Pure sugarcane jaggery rich in natural minerals</p>
+                                </div>
                             </div>
                             <div class="carousel-slide">
-                                <img src="WhatsApp Image 2025-09-16 at 21.59.20_a7e94f44.jpg" alt="Annapurna Mouth Freshener">
-                                <div class="carousel-caption">Annapurna Mouth Freshener</div>
+                                <div class="carousel-image-wrapper">
+                                    <img src="WhatsApp Image 2025-09-16 at 21.59.20_a7e94f44.jpg" alt="Annapurna Mouth Freshener">
+                                </div>
+                                <div class="carousel-overlay"></div>
+                                <div class="carousel-caption">
+                                    <h3>Annapurna Mouth Freshener</h3>
+                                    <p>Traditional herbal blend for fresh breath</p>
+                                </div>
                             </div>
                             <div class="carousel-slide">
-                                <img src="modak saran masala.jpg" alt="Modakam Saran Masala">
-                                <div class="carousel-caption">Modakam Saran Masala</div>
+                                <div class="carousel-image-wrapper">
+                                    <img src="modak saran masala.jpg" alt="Modakam Saran Masala">
+                                </div>
+                                <div class="carousel-overlay"></div>
+                                <div class="carousel-caption">
+                                    <h3>Modakam Saran Masala</h3>
+                                    <p>Authentic traditional masala for energy</p>
+                                </div>
                             </div>
                             <div class="carousel-slide">
-                                <img src="masala.jpg" alt="Kolhapuri Masala Mirchi">
-                                <div class="carousel-caption">Kolhapuri Masala Mirchi</div>
+                                <div class="carousel-image-wrapper">
+                                    <img src="masala.jpg" alt="Kolhapuri Masala Mirchi">
+                                </div>
+                                <div class="carousel-overlay"></div>
+                                <div class="carousel-caption">
+                                    <h3>Kolhapuri Masala Mirchi</h3>
+                                    <p>Premium Kolhapuri spice blend</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <button class="carousel-btn next" aria-label="Next">
                         <i class="fas fa-chevron-right"></i>
                     </button>
+                    <div class="carousel-progress">
+                        <div class="carousel-progress-bar"></div>
+                    </div>
                 </div>
                 <div class="carousel-indicators">
-                    <button class="indicator active" data-slide="0"></button>
-                    <button class="indicator" data-slide="1"></button>
-                    <button class="indicator" data-slide="2"></button>
-                    <button class="indicator" data-slide="3"></button>
+                    <button class="indicator active" data-slide="0">
+                        <span class="indicator-label">Jaggery</span>
+                    </button>
+                    <button class="indicator" data-slide="1">
+                        <span class="indicator-label">Freshener</span>
+                    </button>
+                    <button class="indicator" data-slide="2">
+                        <span class="indicator-label">Modakam</span>
+                    </button>
+                    <button class="indicator" data-slide="3">
+                        <span class="indicator-label">Mirchi</span>
+                    </button>
                 </div>
             </div>
 
@@ -471,21 +506,46 @@
                 }
             });
 
-            // Carousel functionality
+            // Enhanced Carousel functionality
             const track = document.querySelector('.carousel-track');
             const slides = Array.from(track.children);
             const prevBtn = document.querySelector('.carousel-btn.prev');
             const nextBtn = document.querySelector('.carousel-btn.next');
             const indicators = Array.from(document.querySelectorAll('.indicator'));
+            const progressBar = document.querySelector('.carousel-progress-bar');
             let currentSlide = 0;
             let autoSlideInterval;
+            let progressInterval;
+            const slideDuration = 5000;
+
+            const resetProgress = () => {
+                if (progressInterval) clearInterval(progressInterval);
+                progressBar.style.width = '0%';
+                
+                let progress = 0;
+                progressInterval = setInterval(() => {
+                    progress += 100 / (slideDuration / 50);
+                    progressBar.style.width = `${Math.min(progress, 100)}%`;
+                    if (progress >= 100) {
+                        clearInterval(progressInterval);
+                    }
+                }, 50);
+            };
 
             const moveToSlide = (targetIndex) => {
+                slides.forEach((slide, i) => {
+                    slide.classList.remove('active');
+                    if (i === targetIndex) {
+                        slide.classList.add('active');
+                    }
+                });
+                
                 track.style.transform = `translateX(-${targetIndex * 100}%)`;
                 indicators.forEach((ind, i) => {
                     ind.classList.toggle('active', i === targetIndex);
                 });
                 currentSlide = targetIndex;
+                resetProgress();
             };
 
             const nextSlide = () => {
@@ -499,11 +559,13 @@
             };
 
             const startAutoSlide = () => {
-                autoSlideInterval = setInterval(nextSlide, 4000);
+                autoSlideInterval = setInterval(nextSlide, slideDuration);
+                resetProgress();
             };
 
             const stopAutoSlide = () => {
                 clearInterval(autoSlideInterval);
+                if (progressInterval) clearInterval(progressInterval);
             };
 
             nextBtn.addEventListener('click', () => {

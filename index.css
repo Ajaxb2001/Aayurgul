@@ -338,7 +338,7 @@ body::after {
 
 /* ==================== Image Carousel ==================== */
 .carousel-container {
-    max-width: 900px;
+    max-width: 1000px;
     margin: 0 auto 4rem;
     position: relative;
 }
@@ -346,8 +346,8 @@ body::after {
 .carousel-wrapper {
     position: relative;
     overflow: hidden;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-lg);
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(139, 111, 71, 0.25);
 }
 
 .carousel-track-container {
@@ -357,19 +357,46 @@ body::after {
 
 .carousel-track {
     display: flex;
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 .carousel-slide {
     min-width: 100%;
     position: relative;
+    overflow: hidden;
+}
+
+.carousel-image-wrapper {
+    position: relative;
+    overflow: hidden;
+    height: 550px;
 }
 
 .carousel-slide img {
     width: 100%;
-    height: 500px;
+    height: 100%;
     object-fit: cover;
     display: block;
+    transition: transform 5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform: scale(1);
+}
+
+/* Ken Burns Effect - Zoom animation on active slide */
+.carousel-slide.active img {
+    transform: scale(1.1);
+}
+
+.carousel-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to top,
+        rgba(44, 36, 22, 0.95) 0%,
+        rgba(44, 36, 22, 0.6) 40%,
+        rgba(44, 36, 22, 0.3) 70%,
+        transparent 100%
+    );
+    z-index: 1;
 }
 
 .carousel-caption {
@@ -377,70 +404,147 @@ body::after {
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(to top, rgba(44, 36, 22, 0.9), transparent);
+    z-index: 2;
+    padding: 3rem 3rem 2.5rem;
     color: var(--bg-white);
-    padding: 3rem 2rem 2rem;
-    font-size: 1.5rem;
-    font-weight: 600;
     text-align: center;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+}
+
+.carousel-slide.active .carousel-caption {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.carousel-caption h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.carousel-caption p {
+    font-size: 1.125rem;
+    color: rgba(250, 248, 245, 0.9);
+    font-weight: 400;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .carousel-btn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(250, 248, 245, 0.9);
-    border: none;
-    width: 50px;
-    height: 50px;
+    background: rgba(250, 248, 245, 0.95);
+    border: 2px solid rgba(139, 111, 71, 0.2);
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     cursor: pointer;
     z-index: 10;
-    transition: var(--transition);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--primary);
-    box-shadow: var(--shadow);
+    box-shadow: 0 8px 24px rgba(139, 111, 71, 0.2);
+    backdrop-filter: blur(8px);
 }
 
 .carousel-btn:hover {
     background: var(--bg-white);
-    transform: translateY(-50%) scale(1.1);
+    transform: translateY(-50%) scale(1.15);
+    box-shadow: 0 12px 32px rgba(139, 111, 71, 0.3);
+    border-color: var(--primary);
+}
+
+.carousel-btn i {
+    font-size: 1.25rem;
 }
 
 .carousel-btn.prev {
-    left: 1rem;
+    left: 1.5rem;
 }
 
 .carousel-btn.next {
-    right: 1rem;
+    right: 1.5rem;
 }
 
+/* Progress Bar */
+.carousel-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: rgba(250, 248, 245, 0.2);
+    z-index: 3;
+}
+
+.carousel-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    width: 0%;
+    transition: width 0.05s linear;
+}
+
+/* Enhanced Indicators */
 .carousel-indicators {
     display: flex;
     justify-content: center;
-    gap: 0.75rem;
-    margin-top: 1.5rem;
+    gap: 1rem;
+    margin-top: 2rem;
 }
 
 .indicator {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: var(--border);
-    border: none;
+    position: relative;
+    padding: 0.75rem 1.5rem;
+    background: var(--bg-white);
+    border: 2px solid var(--border);
+    border-radius: 50px;
     cursor: pointer;
-    transition: var(--transition);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.indicator::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-warm);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.indicator-label {
+    position: relative;
+    z-index: 1;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-gray);
+    transition: color 0.4s ease;
 }
 
 .indicator.active {
-    background: var(--primary);
-    transform: scale(1.2);
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 111, 71, 0.2);
+}
+
+.indicator.active::before {
+    opacity: 1;
+}
+
+.indicator.active .indicator-label {
+    color: var(--bg-white);
 }
 
 .indicator:hover {
-    background: var(--secondary);
+    border-color: var(--secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 111, 71, 0.15);
 }
 
 .products-grid {
@@ -892,17 +996,37 @@ body::after {
         font-size: 1.125rem;
     }
 
-    .carousel-slide img {
-        height: 350px;
+    .carousel-image-wrapper {
+        height: 400px;
     }
 
     .carousel-caption {
-        font-size: 1.25rem;
+        padding: 2rem 1.5rem 1.5rem;
+    }
+
+    .carousel-caption h3 {
+        font-size: 1.5rem;
+    }
+
+    .carousel-caption p {
+        font-size: 1rem;
     }
 
     .carousel-btn {
-        width: 40px;
-        height: 40px;
+        width: 50px;
+        height: 50px;
+    }
+
+    .carousel-btn i {
+        font-size: 1rem;
+    }
+
+    .indicator {
+        padding: 0.6rem 1.2rem;
+    }
+
+    .indicator-label {
+        font-size: 0.8rem;
     }
 
     .products-grid {
@@ -949,27 +1073,45 @@ body::after {
         font-size: 1.5rem;
     }
 
-    .carousel-slide img {
-        height: 250px;
+    .carousel-image-wrapper {
+        height: 300px;
     }
 
     .carousel-caption {
-        font-size: 1rem;
-        padding: 2rem 1rem 1rem;
+        padding: 1.5rem 1rem 1rem;
+    }
+
+    .carousel-caption h3 {
+        font-size: 1.25rem;
+    }
+
+    .carousel-caption p {
+        font-size: 0.875rem;
     }
 
     .carousel-btn {
-        width: 35px;
-        height: 35px;
+        width: 45px;
+        height: 45px;
+    }
+
+    .carousel-btn i {
         font-size: 0.875rem;
     }
 
     .carousel-btn.prev {
-        left: 0.5rem;
+        left: 0.75rem;
     }
 
     .carousel-btn.next {
-        right: 0.5rem;
+        right: 0.75rem;
+    }
+
+    .indicator {
+        padding: 0.5rem 1rem;
+    }
+
+    .indicator-label {
+        font-size: 0.75rem;
     }
 
     .stat-number {
