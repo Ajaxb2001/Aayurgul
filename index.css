@@ -138,7 +138,7 @@ body::after {
     left: 0;
     width: 0;
     height: 2px;
-    background: var(--gradient-blue);
+    background: var(--gradient-warm);
     transition: var(--transition);
 }
 
@@ -577,7 +577,7 @@ body::after {
     position: absolute;
     top: -1px;
     right: -1px;
-    background: var(--gradient-blue);
+    background: var(--gradient-warm);
     color: white;
     padding: 0.5rem 1rem;
     border-radius: 0 var(--radius) 0 var(--radius);
@@ -970,6 +970,14 @@ body::after {
 
 /* ==================== Responsive Design ==================== */
 @media (max-width: 768px) {
+    .container {
+        padding: 0 1rem;
+    }
+
+    .nav-container {
+        padding: 0 1rem;
+    }
+
     .hamburger {
         display: flex;
     }
@@ -994,6 +1002,22 @@ body::after {
 
     .nav-link {
         font-size: 1.125rem;
+    }
+
+    .hero {
+        padding-top: 100px;
+    }
+
+    .hero-content {
+        padding: 0 1rem;
+    }
+
+    .carousel-container {
+        margin: 0 0 3rem;
+    }
+
+    .carousel-wrapper {
+        border-radius: 16px;
     }
 
     .carousel-image-wrapper {
@@ -1021,6 +1045,20 @@ body::after {
         font-size: 1rem;
     }
 
+    .carousel-btn.prev {
+        left: 1rem;
+    }
+
+    .carousel-btn.next {
+        right: 1rem;
+    }
+
+    .carousel-indicators {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-top: 1.5rem;
+    }
+
     .indicator {
         padding: 0.6rem 1.2rem;
     }
@@ -1029,12 +1067,18 @@ body::after {
         font-size: 0.8rem;
     }
 
+    .products {
+        padding: 4rem 0;
+    }
+
     .products-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
 
     .stats-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
     }
 
     .about-content,
@@ -1065,12 +1109,24 @@ body::after {
         font-size: 2rem;
     }
 
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
     .section-title {
         font-size: 1.75rem;
     }
 
     .subsection-title {
         font-size: 1.5rem;
+    }
+
+    .carousel-container {
+        margin: 0 0 2rem;
+    }
+
+    .carousel-wrapper {
+        border-radius: 12px;
     }
 
     .carousel-image-wrapper {
@@ -1106,6 +1162,10 @@ body::after {
         right: 0.75rem;
     }
 
+    .carousel-indicators {
+        gap: 0.5rem;
+    }
+
     .indicator {
         padding: 0.5rem 1rem;
     }
@@ -1120,5 +1180,10 @@ body::after {
 
     .stats-grid {
         grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .product-card {
+        padding: 1.5rem;
     }
 }
