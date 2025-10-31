@@ -968,6 +968,102 @@ body::after {
     to { opacity: 1; transform: scale(1); }
 }
 
+/* ==================== WhatsApp Order Section ==================== */
+.whatsapp-order {
+    padding: 6rem 0;
+    background: var(--bg-white);
+}
+
+.order-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.order-item {
+    background: var(--bg-gray);
+    padding: 2rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    transition: var(--transition);
+    border: 2px solid var(--border);
+}
+
+.order-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary);
+}
+
+.order-product-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.order-product-info i {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--gradient-warm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.order-product-info h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.quantity-selector label {
+    font-weight: 600;
+    color: var(--text-gray);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.qty-input {
+    flex: 1;
+    padding: 0.75rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg-white);
+    color: var(--text-dark);
+    transition: var(--transition);
+    text-align: center;
+}
+
+.qty-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(139, 111, 71, 0.1);
+}
+
+.qty-input::-webkit-inner-spin-button,
+.qty-input::-webkit-outer-spin-button {
+    opacity: 1;
+    height: 40px;
+}
+
 /* ==================== Responsive Design ==================== */
 @media (max-width: 768px) {
     .container {
